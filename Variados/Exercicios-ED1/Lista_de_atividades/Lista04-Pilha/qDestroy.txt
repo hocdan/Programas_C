@@ -1,0 +1,10 @@
+void qDestroy(Fila *f)
+{
+	if (f != NULL) {
+		if (f->numItens == 0) {
+			free(f->qArray);
+			free(f);
+		}
+	}
+
+}

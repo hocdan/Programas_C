@@ -1,0 +1,10 @@
+A lista de exercício deve ser um arquivo comprimido contendo (arquivo readme com 
+o nome do ambiente onde o programa executa, arquivo fonte, executável do programa).  
+
+1 - Escreva um algoritmo para determinar se uma string de caracteres de entrada é
+da forma: xCy,  onde x é uma string consistindo nas letras 'A' e 'B', e y é o 
+inverso de x (isto é, se x = "ABABBA", y deve equivaler a "ABBABA"). 
+Em cada ponto, você só poderá ler o próximo caractere da string.
+2 - Faca um algoritmo que recebe uma string e retorna verdadeiro se ela for um 
+palindromo ou falso caso contrario.
+3 - Faça a função qDestroy.

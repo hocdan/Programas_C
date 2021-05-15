@@ -1,0 +1,18 @@
+Lista de Exercício ->
+Fazer para a arvore que está neste slide a visitacao
+com execução expandida do algoritmo PosOrdem
+Ex: (A(B(D)c))
+
+Trabalho de Implementacao ->
+Implementar um TAD Arvore Binaria de Pesquisa com
+quatro funções:
+- Criar uma arvore vazia
+- Inserir num dado numa arvore
+- Remover um dado de uma arvore
+- Listar em visitação simétrica.
+Refazer o programa que vc já fez duas vezes com as
+seguintes funções:
+- Inserir dados
+- Remover dado
+- Consultar dado
+Listar em visitação simetrica
