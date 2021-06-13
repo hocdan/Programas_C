@@ -11,7 +11,7 @@ int menu() {
     const int altura = 700;
 
     //variaveis da janela Menu
-    int bolaPreta = FALSE, bolaBranca = FALSE;
+    int bolaPreta = FALSE, bolaBranca = FALSE, encerrar = FALSE;
     int status = 0; //status de retorno da janela ao ser fechada (status = encerrar como padrao)
 
     //inicializando paineis e botoes do menu
@@ -43,15 +43,15 @@ int menu() {
         //checando por toques nos botoes
         if ( CheckCollisionPointRec( GetMousePosition(), botaoTutorial) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             status = 2; //status = abrir janela tutorial
-            break; //encerrando loop da janela Menu
+            encerrar = TRUE;
         }
         else if ( CheckCollisionPointRec( GetMousePosition(), botaoJogar) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             status = 3; //status = abrir janela Jogo
-            break; //encerrando loop da janela Menu
+            encerrar = TRUE;
         }
         else if ( CheckCollisionPointRec( GetMousePosition(), botaoConfig) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             status = 4; //status = abrir janela Configuracoes
-            break; //encerrando loop da janela Menu
+            encerrar = TRUE;
         }
 
         //Draw
@@ -78,6 +78,8 @@ int menu() {
             else if (bolaBranca) DrawCircle( GetMousePosition().x, GetMousePosition().y, 10, RAYWHITE);
 
         EndDrawing();
+
+        if (encerrar) break; //encerrando loop da janela atual
     }
 
     CloseWindow(); //encerrando janela Menu
