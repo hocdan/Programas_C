@@ -40,6 +40,7 @@ int jogo() {
 
             //imprimindo botao de de retorno
             DrawRectangle(botaoVoltar.x, botaoVoltar.y, botaoVoltar.width, botaoVoltar.height, RAYWHITE);
+            DrawText(FormatText("<"), botaoVoltar.x+16, botaoVoltar.y+8, 40, BLACK);
 
         EndDrawing();
 
