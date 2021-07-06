@@ -77,6 +77,7 @@ int tutorial() {
 
             //imprimindo botao de de retorno
             DrawRectangle(botaoVoltar.x, botaoVoltar.y, botaoVoltar.width, botaoVoltar.height, RAYWHITE);
+            DrawText(FormatText("<"), botaoVoltar.x+16, botaoVoltar.y+8, 40, BLACK);
 
             //imprimindo efeito de bola branca/preta na ponta do mouse
             if (bolaPreta) DrawCircle( GetMousePosition().x, GetMousePosition().y, 10, BLACK);
