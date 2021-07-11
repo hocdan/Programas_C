@@ -1,0 +1,6 @@
+                                                                # ARQUIVO DE CONFIGURACOES DO JOGO "The way of Go" #
+
+                                                                                >SCREEN_SIZE:800x500;
+                                                                                >SOUND:YES;
+                                                                                >BOARD_SIZE:19x19;
+                                                                                >HANDICAP:2;
