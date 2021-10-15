@@ -114,21 +114,21 @@ int config() {
                     configuracoesAtivas[4] = TRUE;
                 } else if ( i == 5) {
                     //alterando valores de dimensoes do tabuleiro no arquivo para "09x09"
-                    editarArquivo("09X09", 3);
+                    editarArquivo("09x09", 3);
                     //sinalizando que o botao dessa configuração foi ativado e suas variantes nao
                     configuracoesAtivas[5] = TRUE;
                     configuracoesAtivas[6] = FALSE;
                     configuracoesAtivas[7] = FALSE;
                 } else if ( i == 6) {
                     //alterando valores de dimensoes do tabuleiro no arquivo para "13x13"
-                    editarArquivo("13X13", 3);
+                    editarArquivo("13x13", 3);
                     //sinalizando que o botao dessa configuração foi ativado e suas variantes nao
                     configuracoesAtivas[5] = FALSE;
                     configuracoesAtivas[6] = TRUE;
                     configuracoesAtivas[7] = FALSE;
                 } else if ( i == 7) {
                     //alterando valores de dimensoes do tabuleiro no arquivo para "19x19"
-                    editarArquivo("19X19", 3);
+                    editarArquivo("19x19", 3);
                     //sinalizando que o botao dessa configuração foi ativado e suas variantes nao
                     configuracoesAtivas[5] = FALSE;
                     configuracoesAtivas[6] = FALSE;
