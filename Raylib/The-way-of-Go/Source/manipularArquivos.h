@@ -12,6 +12,7 @@
 */
 
     //funcoes disponiveis para manipular arquivos
+    void enviarDado(char* valor, int posicao);
     void lerDados(char *tamTela, char *ativarSom, char *tamTabuleiro, char *ativarHandicap);
     void editarArquivo(char *novoValor, int local);
 
