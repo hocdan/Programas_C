@@ -10,6 +10,52 @@
 
 /*
     Função feita para escanear um arquivo de configurações do jogo: The Way of Go
+    e recolher o dado da posição X encontrado entre os símbolos ":" e ";".
+
+    Input: um inteiro X que indica qual valor entre ":" e ";" deve ser lido e re-
+    passado pela função para uso posterior.
+
+    Output: uma cadeia de caracteres que contem o valor de uma das 4 variáveis: ta-
+    manho de tela, ativar som do jogo, tamanho do tabuleiro e numero do Handicap.
+*/
+
+void enviarDado(char* valor, int posicao) {
+    FILE *arquivo;
+    int valoresLidos = 0, gravar = FALSE;
+    char letra;
+
+    //abrindo arquivo para manipulação
+    if ( (arquivo = fopen(NOME_ARQUIVO, MODO)) == NULL) {
+        exit(1); //encerrando programa com sinalizacao de erro
+    } else {
+        //resetando string
+        strcpy(valor, "");
+        //loop principal
+        while ( (letra = getc(arquivo)) != EOF) {
+            //verificando se chegou a hora de gravar
+            if ( letra == ':') {
+                gravar = TRUE;
+            } 
+            //varificando se chegou a hora de parar gravacao
+            else if ( letra == ';') {
+                gravar = FALSE;
+                valoresLidos++; //atualizando contador de gravacoes
+            }
+            //verificando se ha caracteres validos para armazenar
+            //e se sao valores da posicao desejada
+            else if (gravar && valoresLidos == posicao) {
+                //armazenando caracteres da posição desejada
+                strncat(valor, &letra, 1);
+            }
+        }
+        rewind(arquivo); //retornando ponteiro para o inicio do arquivo
+        fclose(arquivo); //descartando ponteiro para o arquivo (uso finalizado)
+
+    }
+}
+
+/*
+    Função feita para escanear um arquivo de configurações do jogo: The Way of Go
     e recolher os dados encontrados entre os simbolos ":" e ";".
 
     Input: ponteiros para os enderecos dos dados a serem lidos do arquivo. Nesse ca- 
