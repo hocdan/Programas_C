@@ -39,8 +39,8 @@ int jogo() {
     else som = FALSE;
 
     if ( strcmp(tamTabuleiro, "09x09") == 0) tamanho = 9;
-    else if ( strcmp(tamTela, "13x13") == 0) tamanho = 13;
-    else if ( strcmp(tamTela, "19x19") == 0) tamanho = 19;
+    else if ( strcmp(tamTabuleiro, "13x13") == 0) tamanho = 13;
+    else if ( strcmp(tamTabuleiro, "19x19") == 0) tamanho = 19;
 
     handicap = atoi(ativarHandicap);
 
@@ -87,15 +87,28 @@ int jogo() {
             //imprimindo tabuleiro
             for (i=0; i<tamanho; i++) {
                 for (j=0; j<tamanho; j++) {
-                    DrawRectangle(j*10+10, i*10, 10, 10, YELLOW);
+                    //imprimindo casas do tabuleiro de acordo com as dimensoes configuradas
+                    if ( largura == 500 && altura == 300) {
+                        if (tamanho == 9) DrawRectangle(j*30, i*30, 30, 30, YELLOW);
+                        else if (tamanho == 13) DrawRectangle(j*20, i*20, 20, 20, YELLOW);
+                        else if (tamanho == 19) DrawRectangle(j*10, i*10, 10, 10, YELLOW);
+                    } else if ( largura == 700 && altura == 500) {
+                        if (tamanho == 9) DrawRectangle(j*40, i*40, 40, 40, YELLOW);
+                        else if (tamanho == 13) DrawRectangle(j*30, i*30, 30, 30, YELLOW);
+                        else if (tamanho == 19) DrawRectangle(j*20, i*20, 20, 20, YELLOW);
+                    } else if ( largura == 900 && altura == 700) {
+                        if (tamanho == 9) DrawRectangle(j*50, i*50, 50, 50, YELLOW);
+                        else if (tamanho == 13) DrawRectangle(j*40, i*40, 40, 40, YELLOW);
+                        else if (tamanho == 19) DrawRectangle(j*30, i*30, 30, 30, YELLOW);
+                    }
                 }
             }
 
             //imprimindo informacoes
-            DrawText( FormatText("Dimensões: %s", tamTela), 20, 20, 20, RAYWHITE);
-            DrawText( FormatText("Som: %s", ativarSom), 20, 60, 20, RAYWHITE);
-            DrawText( FormatText("Tamanho: %s", tamTabuleiro), 20, 100, 20, RAYWHITE);
-            DrawText( FormatText("Handicap: %s", ativarHandicap), 20, 140, 20, RAYWHITE);
+            DrawText( FormatText("Dimensões: %s", tamTela), 200, 20, 20, RAYWHITE);
+            DrawText( FormatText("Som: %s", ativarSom), 200, 60, 20, RAYWHITE);
+            DrawText( FormatText("Tamanho: %s", tamTabuleiro), 200, 100, 20, RAYWHITE);
+            DrawText( FormatText("Handicap: %s", ativarHandicap), 200, 140, 20, RAYWHITE);
 
             //imprimindo botao de de retorno
             DrawRectangle(botaoVoltar.x, botaoVoltar.y, botaoVoltar.width, botaoVoltar.height, RAYWHITE);
