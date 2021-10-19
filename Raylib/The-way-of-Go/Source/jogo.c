@@ -13,7 +13,7 @@ int jogo() {
     int largura, altura, som, tamanho, handicap;
 
     //variaveis da janela Jogo
-    int i, j;
+    int i, j, turno = 0;
     int encerrar = FALSE;
     int status = 1; //status de retorno da janela ao ser fechada (status = menu como padrao)
     char tamTela[11], tamTabuleiro[11], ativarSom[4], ativarHandicap[2];
@@ -125,6 +125,72 @@ int jogo() {
         }
     }
 
+    /*
+        gerando tabuleiro invisivel (maior que o tabuleiro visivel por 1 unidade em ambas as direcoes)
+        e setando valores padroes da situacao de cada intersecao do tabuleiro.
+    */
+    Rectangle tabuleiro2[tamanho+1][tamanho+1];
+    int tabuleiro3[tamanho+1][tamanho+1];
+    for (i=0; i<=tamanho; i++) {
+        for (j=0; j<=tamanho; j++) {
+            tabuleiro3[i][j] = 0; //setando como vazio/sem pecas nessa posicao do tabuleiro
+            //gerando casas do tabuleiro visivel de acordo com as dimensoes configuradas
+            if ( largura == 500 && altura == 300) {
+                if (tamanho == 8) {
+                    tabuleiro2[i][j].x = j*30+15;
+                    tabuleiro2[i][j].y = i*30+15;
+                    tabuleiro2[i][j].width = 30;
+                    tabuleiro2[i][j].height = 30;
+                } else if (tamanho == 12) {
+                    tabuleiro2[i][j].x = j*20+30;
+                    tabuleiro2[i][j].y = i*20+20;
+                    tabuleiro2[i][j].width = 20;
+                    tabuleiro2[i][j].height = 20;
+                } else if (tamanho == 18) {
+                    tabuleiro2[i][j].x = j*15+8.5;
+                    tabuleiro2[i][j].y = i*15+8.5;
+                    tabuleiro2[i][j].width = 15;
+                    tabuleiro2[i][j].height = 15;
+                }
+            } else if ( largura == 700 && altura == 500) {
+                if (tamanho == 8) {
+                    tabuleiro2[i][j].x = j*50+25;
+                    tabuleiro2[i][j].y = i*50+25;
+                    tabuleiro2[i][j].width = 50;
+                    tabuleiro2[i][j].height = 50;
+                } else if (tamanho == 12) {
+                    tabuleiro2[i][j].x = j*35+32.5;
+                    tabuleiro2[i][j].y = i*35+22.5;
+                    tabuleiro2[i][j].width = 35;
+                    tabuleiro2[i][j].height = 35;
+                } else if (tamanho == 18) {
+                    tabuleiro2[i][j].x = j*25+11.5;
+                    tabuleiro2[i][j].y = i*25+11.5;
+                    tabuleiro2[i][j].width = 25;
+                    tabuleiro2[i][j].height = 25;
+                }
+            } else if ( largura == 900 && altura == 700) {
+                if (tamanho == 8) {
+                    tabuleiro2[i][j].x = j*70+45;
+                    tabuleiro2[i][j].y = i*70+35;
+                    tabuleiro2[i][j].width = 70;
+                    tabuleiro2[i][j].height = 70;
+                } else if (tamanho == 12) {
+                    tabuleiro2[i][j].x = j*50+35;
+                    tabuleiro2[i][j].y = i*50+30;
+                    tabuleiro2[i][j].width = 50;
+                    tabuleiro2[i][j].height = 50;
+                } else if (tamanho == 18) {
+                    tabuleiro2[i][j].x = j*35+24.5;
+                    tabuleiro2[i][j].y = i*35+20.5;
+                    tabuleiro2[i][j].width = 35;
+                    tabuleiro2[i][j].height = 35;
+                }
+            }
+        }
+    }
+
+
     //inicializando tela e FPS
     InitWindow(largura, altura, "Jogo - GO");
 
@@ -133,6 +199,19 @@ int jogo() {
     //lopp principal da janela Jogo
     while (!WindowShouldClose()) {
         //Update
+
+        //checando colisoes do cursor do mouse nas intercecoes do tabuleiro (usando tabuleiro invisivel de referencia)
+        for (i=0; i<=tamanho; i++) {
+            for (j=0; j<=tamanho; j++) {
+                //verificando se houve toque nessa area e se está vazia
+                if ( CheckCollisionPointRec( GetMousePosition(), tabuleiro2[i][j]) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && tabuleiro3[i][j] == 0) {
+                    //setando valor de acordo com a peca usada para jogar
+                    if (turno%2 == 0) tabuleiro3[i][j] = 1; //PRETA
+                    else tabuleiro3[i][j] = 2; //BRANCA
+                    turno++; //atualizando turno e portanto de quem é a vez de jogar
+                }
+            }
+        }
 
         //verificando toque no botao de retornar
         if ( CheckCollisionPointRec( GetMousePosition(), botaoVoltar) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
@@ -150,6 +229,19 @@ int jogo() {
                     //imprimindo casas do tabuleiro de acordo com as dimensoes configuradas
                     DrawRectangle(tabuleiro[i][j].x, tabuleiro[i][j].y, tabuleiro[i][j].width, tabuleiro[i][j].height, YELLOW);
                     DrawRectangleLines(tabuleiro[i][j].x, tabuleiro[i][j].y, tabuleiro[i][j].width, tabuleiro[i][j].height, BLACK);
+                }
+            }
+            //imprimindo pecas do tabuleiro
+            for (i=0; i<=tamanho; i++) {
+                for (j=0; j<=tamanho; j++) {
+                    //imprimindo pecas de acordo com as dimensoes configuradas
+                    if ( tabuleiro3[i][j] == 1) {
+                        DrawCircle(tabuleiro2[i][j].x+(int)(tabuleiro2[i][j].width/2), tabuleiro2[i][j].y+(int)(tabuleiro2[i][j].height/2), tabuleiro2[i][j].width/2, BLACK);
+                        DrawCircleLines(tabuleiro2[i][j].x+(int)(tabuleiro2[i][j].width/2), tabuleiro2[i][j].y+(int)(tabuleiro2[i][j].height/2), tabuleiro2[i][j].width/2, RAYWHITE);
+                    } else if ( tabuleiro3[i][j] == 2) {
+                        DrawCircle(tabuleiro2[i][j].x+(int)(tabuleiro2[i][j].width/2), tabuleiro2[i][j].y+(int)(tabuleiro2[i][j].height/2), tabuleiro2[i][j].width/2, RAYWHITE);
+                        DrawCircleLines(tabuleiro2[i][j].x+(int)(tabuleiro2[i][j].width/2), tabuleiro2[i][j].y+(int)(tabuleiro2[i][j].height/2), tabuleiro2[i][j].width/2, BLACK);
+                    }
                 }
             }
 
