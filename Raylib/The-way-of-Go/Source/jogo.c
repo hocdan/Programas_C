@@ -18,6 +18,9 @@ int jogo() {
     int status = 1; //status de retorno da janela ao ser fechada (status = menu como padrao)
     char tamTela[11], tamTabuleiro[11], ativarSom[4], ativarHandicap[2];
 
+    //variaveis dos jogadores
+    int pretasCapturadas = 0, brancasCapturadas = 0;
+
     //setando valores iniciais das variaveis da janela Jogo
     enviarDado(tamTela, 0);
     enviarDado(ativarSom, 1);
@@ -63,6 +66,27 @@ int jogo() {
         botaoVoltar.height = 50;
         botaoVoltar.x = 820;
         botaoVoltar.y = 20;
+    }
+
+    //inicializando botao de passar a vez de acordo com as dimensoes atuais da tela
+    Rectangle botaoPassar;
+    if ( largura == 500 && altura == 300) {
+        botaoPassar.width = 100;
+        botaoPassar.height = 40;
+        botaoPassar.x = 350;
+        botaoPassar.y = 250;
+    }
+    else if ( largura == 700 && altura == 500) {
+        botaoPassar.width = 100;
+        botaoPassar.height = 50;
+        botaoPassar.x = 530;
+        botaoPassar.y = 400;
+    }
+    else {
+        botaoPassar.width = 140;
+        botaoPassar.height = 60;
+        botaoPassar.x = 710;
+        botaoPassar.y = 600;
     }
 
     //gerando tabuleiro visivel
@@ -200,6 +224,10 @@ int jogo() {
     while (!WindowShouldClose()) {
         //Update
 
+        //TEEEEEEEEEEEEEEEESTEEEEEEEEEEEE!!!
+        if (turno%2 == 0 && IsMouseButtonPressed(MOUSE_RIGHT_BUTTON)) brancasCapturadas++;
+        else if (turno%2 == 1 && IsMouseButtonPressed(MOUSE_RIGHT_BUTTON)) pretasCapturadas++;
+
         //checando colisoes do cursor do mouse nas intercecoes do tabuleiro (usando tabuleiro invisivel de referencia)
         for (i=0; i<=tamanho; i++) {
             for (j=0; j<=tamanho; j++) {
@@ -217,6 +245,10 @@ int jogo() {
         if ( CheckCollisionPointRec( GetMousePosition(), botaoVoltar) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             status = 1; //status = abrir janela Menu
             encerrar = TRUE;
+        }
+        //verificando toque no botao de passar a vez
+        if ( CheckCollisionPointRec( GetMousePosition(), botaoPassar) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+           turno++; //atualizando turno (passando a vez do jogador atual)
         }
 
         //Draw
@@ -245,21 +277,62 @@ int jogo() {
                 }
             }
 
-            /*//imprimindo informacoes
-            DrawText( FormatText("Dimensões: %s", tamTela), 200, 80, 20, RAYWHITE);
-            DrawText( FormatText("Som: %s", ativarSom), 200, 120, 20, RAYWHITE);
-            DrawText( FormatText("Tamanho: %s", tamTabuleiro), 200, 160, 20, RAYWHITE);
-            DrawText( FormatText("Handicap: %s", ativarHandicap), 200, 200, 20, RAYWHITE);
-            */
+            //imprimindo informações
+            if ( largura == 500 && altura == 300) {
+                DrawText(FormatText("%d", pretasCapturadas), 430, 155, 25, RAYWHITE);
+                DrawText(FormatText("%d", brancasCapturadas), 430, 205, 25, RAYWHITE);
+                DrawCircle( 380, 160, tabuleiro2[i][j].width/2, BLACK);
+                DrawCircleLines( 380, 160, tabuleiro2[i][j].width/2, RAYWHITE);
+                DrawCircle( 380, 210, tabuleiro2[i][j].width/2, RAYWHITE);
+                DrawText(FormatText("TURN: "), 350, 40, 25, RAYWHITE);
+                if (turno%2 == 0) {
+                    DrawCircle( 380, 100, tabuleiro2[i][j].width/2, BLACK);
+                    DrawCircleLines( 380, 100, tabuleiro2[i][j].width/2, RAYWHITE);
+                }
+                else DrawCircle( 380, 100, tabuleiro2[i][j].width/2, RAYWHITE);
+            } else if ( largura == 700 && altura == 500) {
+                DrawText(FormatText("%d", pretasCapturadas), 610, 255, 30, RAYWHITE);
+                DrawText(FormatText("%d", brancasCapturadas), 610, 315, 30, RAYWHITE);
+                DrawCircle( 560, 260, tabuleiro2[i][j].width/2, BLACK);
+                DrawCircleLines( 560, 260, tabuleiro2[i][j].width/2, RAYWHITE);
+                DrawCircle( 560, 320, tabuleiro2[i][j].width/2, RAYWHITE);
+                DrawText(FormatText("TURN: "), 530, 80, 28, RAYWHITE);
+                if (turno%2 == 0) {
+                    DrawCircle( 560, 150, tabuleiro2[i][j].width/2, BLACK);
+                    DrawCircleLines( 560, 150, tabuleiro2[i][j].width/2, RAYWHITE);
+                }
+                else DrawCircle( 560, 150, tabuleiro2[i][j].width/2, RAYWHITE);
+            } else {
+                DrawText(FormatText("%d", pretasCapturadas), 820, 340, 40, RAYWHITE);
+                DrawText(FormatText("%d", brancasCapturadas), 820, 440, 40, RAYWHITE);
+                DrawCircle( 750, 350, tabuleiro2[i][j].width/2, BLACK);
+                DrawCircleLines( 750, 350, tabuleiro2[i][j].width/2, RAYWHITE);
+                DrawCircle( 750, 450, tabuleiro2[i][j].width/2, RAYWHITE);
+                DrawText(FormatText("TURN: "), 710, 110, 30, RAYWHITE);
+                if (turno%2 == 0) {
+                    DrawCircle( 750, 200, tabuleiro2[i][j].width/2, BLACK);
+                    DrawCircleLines( 750, 200, tabuleiro2[i][j].width/2, RAYWHITE);
+                }
+                else DrawCircle( 750, 200, tabuleiro2[i][j].width/2, RAYWHITE);
+            }
 
             //imprimindo botao de de retorno
             DrawRectangle(botaoVoltar.x, botaoVoltar.y, botaoVoltar.width, botaoVoltar.height, RAYWHITE);
             if ( largura == 500 && altura == 300) {
-                DrawText(FormatText("<"), botaoVoltar.x+10, botaoVoltar.y+5, 28, BLACK);
+                DrawText(FormatText("<"), botaoVoltar.x+10, botaoVoltar.y+4, 28, BLACK);
             } else if ( largura == 700 && altura == 500) {
                 DrawText(FormatText("<"), botaoVoltar.x+14, botaoVoltar.y+7, 30, BLACK);
             } else {
                 DrawText(FormatText("<"), botaoVoltar.x+16, botaoVoltar.y+8, 40, BLACK);
+            }
+            //imprimindo botao de passar a vez
+            DrawRectangle(botaoPassar.x, botaoPassar.y, botaoPassar.width, botaoPassar.height, RAYWHITE);
+            if ( largura == 500 && altura == 300) {
+                DrawText(FormatText("PASS"), botaoPassar.x+13, botaoPassar.y+8, 28, BLACK);
+            } else if ( largura == 700 && altura == 500) {
+                DrawText(FormatText("PASS"), botaoPassar.x+12, botaoPassar.y+12, 30, BLACK);
+            } else {
+                DrawText(FormatText("PASS"), botaoPassar.x+18, botaoPassar.y+12, 40, BLACK);
             }
 
         EndDrawing();
