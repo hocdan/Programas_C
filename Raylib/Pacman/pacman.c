@@ -8,6 +8,13 @@
 #define TRUE 1
 #define FALSE 0
 
+/*
+        OBSERVACAO: POSSIVEL LOGICA PARA SOLUCIONAR BUG DO DESENCONTRO FANTASMA
+
+        -> modificar a funcao movimentar() do jogador para que a checagem de colisoes com outros itens seja
+        independente e chamada a cada frame (ou multiplos do frame dos fantasmas e do pacman).
+*/
+
 /*  MOUSE_LEFT_BUTTON   = 0 e MOUSE_RIGHT_BUTTON  = 1
     KEY_ZERO            = 48, KEY_W               = 87
     KEY_ONE             = 49, KEY_A               = 65,
